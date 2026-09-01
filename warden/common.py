@@ -179,7 +179,7 @@ def parse_google_benchmark_json_data(json_data):
 
 def parse_benchpark_json_data(json_data, skipBefore=None):
     """
-    Process Benchpark CI summary json data.
+    Process Benchpark CI job metadata json data.
     """
     date_long = None
     date_short = None
@@ -192,27 +192,26 @@ def parse_benchpark_json_data(json_data, skipBefore=None):
         git_sha = json_data['gitSHA']
 
     data_rows = []
-    for result in json_data['results']:
-        performance = result['performance']
-        if not performance['available']:
-            continue
+    performance = json_data['performance']
+    if not performance['available']:
+        return data_rows
 
-        path_parts = [
-            result['host'],
-            result['benchmark'],
-            result['variant'],
-            performance['metric'],
-            performance['region'],
-        ]
-        readable_path = ' / '.join(path_parts)
+    path_parts = [
+        json_data['host'],
+        json_data['benchmark'],
+        json_data['variant'],
+        performance['metric'],
+        performance['region'],
+    ]
+    readable_path = ' / '.join(path_parts)
 
-        data_rows.append(dict(date=date_long,
-                              measurement=float(performance['value']),
-                              gitSHA=git_sha,
-                              readable_path=readable_path,
-                              date_only=date_short,
-                              number_of_slashes=0,
-                              has_children=False))
+    data_rows.append(dict(date=date_long,
+                          measurement=float(performance['value']),
+                          gitSHA=git_sha,
+                          readable_path=readable_path,
+                          date_only=date_short,
+                          number_of_slashes=0,
+                          has_children=False))
     return data_rows
 
 def parse_json_file(file_path, skipBefore=None):
@@ -228,8 +227,8 @@ def parse_json_file(file_path, skipBefore=None):
             return []
 
     if 'benchmarks' in json_data:
-        return parse_google_benchmark_json_data(json_data)
-    if 'results' in json_data:
+        return parse_google_benchmark_json_data(json_data, skipBefore)
+    if 'performance' in json_data:
         return parse_benchpark_json_data(json_data, skipBefore)
 
     return []
