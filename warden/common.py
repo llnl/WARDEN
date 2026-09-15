@@ -249,7 +249,7 @@ def parseFiles(benchmark_config, pickleFilename, dataset_folder, maxNumDays=120,
 
         tmpPickleFilename = Path(Path(pickleFilename).parent/"temp.hkl")
         df.to_pickle(tmpPickleFilename, compression="xz")
-        tmpPickleFilename.rename(pickleFilename)
+        tmpPickleFilename.replace(pickleFilename)
     else:
         logger.info(f"After filtering by date, no files were read in {dataset_folder}. Not writing f{pickleFilename}.")
         pickleFilename.unlink(missing_ok=True)
