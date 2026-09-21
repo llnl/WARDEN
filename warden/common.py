@@ -197,9 +197,10 @@ def parse_benchpark_json_data(json_data, skipBefore=None):
         json_data['host'],
         json_data['benchmark'],
         json_data['variant'],
-        performance['metric'],
-        performance['region'],
     ]
+    if json_data['system_args']:
+        path_parts.append(json_data['system_args'])
+    path_parts += [performance['metric'], performance['region']]
     readable_path = ' / '.join(path_parts)
 
     data_rows.append(dict(date=date_long,
