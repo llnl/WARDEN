@@ -136,7 +136,7 @@ def parse_xml_file(filename, skipBefore=None, deletePrefix=None):
         print(f"Could not parse tree because of the following error: {e}")
         return []
 
-def parse_google_benchmark_json_data(json_data):
+def parse_google_benchmark_json_data(json_data, skipBefore=None):
     """
     Process Google Benchmark json data.
     """
@@ -297,7 +297,7 @@ def parseFiles(benchmark_config, pickleFilename, dataset_folder, maxNumDays=120,
 
         tmpPickleFilename = Path(Path(pickleFilename).parent/"temp.hkl")
         df.to_pickle(tmpPickleFilename, compression="xz")
-        tmpPickleFilename.rename(pickleFilename)
+        tmpPickleFilename.replace(pickleFilename)
     else:
         logger.info(f"After filtering by date, no files were read in {dataset_folder}. Not writing f{pickleFilename}.")
         pickleFilename.unlink(missing_ok=True)
