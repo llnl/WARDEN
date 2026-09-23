@@ -12,10 +12,12 @@ repositories:
   - name: olcf
     # The URL can be left empty. In this case, the data repository needs to be cloned by hand.
     # This allows to avoid URLs with access tokens in the config file.
-    url: https://github.com/kokkos/kokkos-kernels-performance
+    url: https://github.com/llnl/benchpark-performance
     datasets:
-      - name: Aurora      # name for the data repo
-        path: Aurora  # relative path for a folder with performance data in it
+      - name: Dane      # name for the data repo
+        path: dane  # relative path for a folder with performance data in it
+      - name: Tuolumne
+        path: tuolumne
 
 # annotations
 annotations:
