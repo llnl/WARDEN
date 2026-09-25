@@ -368,6 +368,7 @@ def graph_creator(curr_depth, previous_path, df, second_df, chosen_dset, second_
 
         counter = 0
         wrap_title_length = 55
+        max_title_lines = 4
         list_of_graphs = []
         with LoggingTimer("TIMER FOR graph_creator()::ForLoop:"):
             for path in unique_paths:
@@ -453,8 +454,8 @@ def graph_creator(curr_depth, previous_path, df, second_df, chosen_dset, second_
                 for path_part in path_parts:
                     wrapped_parts = textwrap.wrap(path_part,
                                                   width=wrap_title_length,
-                                                  break_long_words=False,
-                                                  break_on_hyphens=False) or ['']
+                                                  break_long_words=True,
+                                                  break_on_hyphens=True) or ['']
                     next_title_line = f'{title_line} / {wrapped_parts[0]}' if title_line else wrapped_parts[0]
                     if title_line and len(next_title_line) > wrap_title_length:
                         title_lines.append(title_line)
@@ -465,6 +466,9 @@ def graph_creator(curr_depth, previous_path, df, second_df, chosen_dset, second_
                         title_lines.append(title_line)
                         title_line = wrapped_part
                 title_lines.append(title_line)
+                if len(title_lines) > max_title_lines:
+                    title_lines = title_lines[:max_title_lines]
+                    title_lines[-1] = f'{title_lines[-1][:wrap_title_length - 3].rstrip()}...'
                 wrapped_path = '<br>'.join(title_lines)
 
                 plot.update_layout(
