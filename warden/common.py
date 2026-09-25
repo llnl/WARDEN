@@ -136,7 +136,7 @@ def parse_xml_file(filename, skipBefore=None, deletePrefix=None):
         print(f"Could not parse tree because of the following error: {e}")
         return []
 
-def parse_google_benchmark_json_data(json_data):
+def parse_google_benchmark_json_data(json_data, skipBefore=None):
     """
     Process Google Benchmark json data.
     """
