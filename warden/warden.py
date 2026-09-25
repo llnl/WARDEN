@@ -443,6 +443,7 @@ def graph_creator(curr_depth, previous_path, df, second_df, chosen_dset, second_
                     if have_second_dataset:
                         status_rows = pd.concat([status_rows, second_dff_path[second_dff_path['measurement'].isna()]])
                     status_rows['color'] = status_rows['status'].map({'Build': 'orange', 'Run': 'red'}).fillna('gray')
+                    status_rows['display_status'] = status_rows['status'].replace({'Build': 'Build fail', 'Run': 'Run fail'})
                     plot.add_shape(type='line', xref='paper', yref='y2',
                                    x0=0, x1=1, y0=0, y1=0,
                                    line_width=1, line_color='gray')
@@ -455,7 +456,7 @@ def graph_creator(curr_depth, previous_path, df, second_df, chosen_dset, second_
                                               hovertemplate=("Date: %{x}<br>" +
                                                              "Status: %{customdata[4]}<br>" +
                                                              "Note: %{customdata[5]}<extra></extra>"),
-                                              customdata=status_rows[["gitSHA", "truncated_note", "note", "prevGitSHA", "status", "failure_reason"]]))
+                                              customdata=status_rows[["gitSHA", "truncated_note", "note", "prevGitSHA", "display_status", "failure_reason"]]))
 
                 # determine y range
                 MARGIN = 0.1
