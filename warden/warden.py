@@ -367,7 +367,7 @@ def graph_creator(curr_depth, previous_path, df, second_df, chosen_dset, second_
                                   key=lambda x: natural_sorting(x))
 
         counter = 0
-        wrap_title_length = 30
+        wrap_title_length = 55
         list_of_graphs = []
         with LoggingTimer("TIMER FOR graph_creator()::ForLoop:"):
             for path in unique_paths:
