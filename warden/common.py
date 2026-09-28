@@ -232,6 +232,8 @@ def parse_json_file(file_path, skipBefore=None):
     if 'performance' in json_data:
         return parse_benchpark_json_data(json_data, skipBefore)
 
+    logger.warning(f"Skipping {file_path}: unrecognized JSON format "
+                   "(expected a 'benchmarks' or 'performance' key)")
     return []
 
 def parse_file(file_path, benchmark_config, skipBefore=None, deletePrefix=None):
