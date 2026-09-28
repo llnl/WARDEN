@@ -118,8 +118,8 @@ app.layout = dmc.MantineProvider(
                             # Item on the left
                             html.A(
                                 id="commit-anchor",
-                                children=f"Go To {config["code"]["name"]} commits",
-                                href=f"{config["code"]["url"]}/compare",
+                                children=f"Go To {config['code']['name']} commits",
+                                href=f"{config['code']['url']}/compare",
                                 target='_blank',
                             ),
 
@@ -565,10 +565,10 @@ def display_click_data(click_data):
         gitSHA = point['customdata'][0]
         annotation = point['customdata'][2]
         prevGitSHA = point['customdata'][3]
-        commit_href = f"{config["code"]["url"]}/compare/{prevGitSHA}...{gitSHA}"
+        commit_href = f"{config['code']['url']}/compare/{prevGitSHA}...{gitSHA}"
 
         return (f"Annotation for {point_date}", True, point['x'], commit_href, f"GitSHA: {gitSHA}", f"NOTE: {annotation}")
-    return("ERROR", False, "ERROR", f"{config["code"]["url"]}/compare/", "ERROR", "ERROR")
+    return("ERROR", False, "ERROR", f"{config['code']['url']}/compare/", "ERROR", "ERROR")
 
 
 ##################################################
